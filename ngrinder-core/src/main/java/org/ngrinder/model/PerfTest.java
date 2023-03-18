@@ -15,6 +15,7 @@ package org.ngrinder.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -281,6 +282,38 @@ public class PerfTest extends BaseModel<PerfTest> {
 	@Cloneable
 	@Column(name = "param")
 	private String param;
+
+	@Expose
+	@Column(name = "minRT")
+	private Double minRT;
+
+	@Expose
+	@Column(name = "pct25RT")
+	private Double pct25RT;
+
+	@Expose
+	@Column(name = "pct50RT")
+	private Double pct50RT;
+
+	@Expose
+	@Column(name = "pct75RT")
+	private Double pct75RT;
+
+	@Expose
+	@Column(name = "pct90RT")
+	private Double pct90RT;
+
+	@Expose
+	@Column(name = "pct95RT")
+	private Double pct95RT;
+
+	@Expose
+	@Column(name = "pct99RT")
+	private Double pct99RT;
+
+	@Expose
+	@Column(name = "maxRT")
+	private Double maxRT;
 
 	@PrePersist
 	@PreUpdate

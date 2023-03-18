@@ -61,6 +61,66 @@
                             <th v-text="i18n('perfTest.report.errors')"></th>
                             <td>{{ test.errors | numFormat }}</td>
                         </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.errorRate')"></th>
+                            <td>{{ test.errors /(test.tests + test.errors) | numFormat }}</td>
+                        </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.minRT')"></th>
+                            <td>
+                                <span>{{ test.minRT | numFormat }}</span>
+                                <code>ms</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.pct25RT')"></th>
+                            <td>
+                                <span>{{ test.pct25RT | numFormat }}</span>
+                                <code>ms</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.pct50RT')"></th>
+                            <td>
+                                <span>{{ test.pct50RT | numFormat }}</span>
+                                <code>ms</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.pct75RT')"></th>
+                            <td>
+                                <span>{{ test.pct75RT | numFormat }}</span>
+                                <code>ms</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.pct90RT')"></th>
+                            <td>
+                                <span>{{ test.pct90RT | numFormat }}</span>
+                                <code>ms</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.pct95RT')"></th>
+                            <td>
+                                <span>{{ test.pct95RT | numFormat }}</span>
+                                <code>ms</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.pct99RT')"></th>
+                            <td>
+                                <span>{{ test.pct99RT | numFormat }}</span>
+                                <code>ms</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th v-text="i18n('perfTest.report.maxRT')"></th>
+                            <td>
+                                <span>{{ test.maxRT | numFormat }}</span>
+                                <code>ms</code>
+                            </td>
+                        </tr>
                     </table>
                     <div class="card bg-light">
                         <ul class="nav flex-column">

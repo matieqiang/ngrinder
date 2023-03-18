@@ -47,6 +47,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.mutable.MutableBoolean;
+import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 import org.ngrinder.common.exception.NGrinderRuntimeException;
 import org.ngrinder.common.util.DateUtils;
 import org.ngrinder.common.util.ReflectionUtils;
@@ -148,6 +149,9 @@ public class SingleConsole extends AbstractSingleConsole implements Listener, Sa
      * cvs file Separator value.
      */
 	private String cvsSeparator = ",";
+
+	private List<Double> responseTimeList = new CopyOnWriteArrayList<Double>();
+
 	/**
 	 * Constructor to bind all ip and the given port.
 	 * <p/>
@@ -829,6 +833,10 @@ public class SingleConsole extends AbstractSingleConsole implements Listener, Sa
 					intervalStatisticsMap.put(each.getKey(),
 							getRealDoubleValue(each.getValue().getDoubleValue(intervalSet)));
 				}
+				if ("Mean_Test_Time_(ms)".equals(each.getKey())) {
+					responseTimeList.add((Double) getRealDoubleValue(each.getValue()
+						.getDoubleValue(intervalStatistics)));
+				}
 			}
 			cumulativeStatistics.add(accumulatedStatisticMap);
 			lastSampleStatistics.add(intervalStatisticsMap);
@@ -840,6 +848,10 @@ public class SingleConsole extends AbstractSingleConsole implements Listener, Sa
 			if (isInterestingStatistics(each.getKey())) {
 				totalStatistics.put(each.getKey(),
 						getRealDoubleValue(each.getValue().getDoubleValue(accumulatedStatistics)));
+			}
+			if ("Mean_Test_Time_(ms)".equals(each.getKey())) {
+				responseTimeList.add((Double) getRealDoubleValue(each.getValue()
+					.getDoubleValue(intervalStatistics)));
 			}
 		}
 
@@ -1169,6 +1181,7 @@ public class SingleConsole extends AbstractSingleConsole implements Listener, Sa
 			this.sampleModel.stop();
 		}
 		informTestSamplingEnd();
+		getAdditionalStats();
 	}
 
 	private void informTestSamplingStart() {
@@ -1319,5 +1332,35 @@ public class SingleConsole extends AbstractSingleConsole implements Listener, Sa
 	 */
 	public void setCsvSeparator(String csvSeparator){
 		this.cvsSeparator = csvSeparator;
+	}
+
+	private void getAdditionalStats() {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("getAdditionalStats() responseTimeList is {}", responseTimeList.toString());
+		}
+
+		// list to array
+		int i = 0;
+		double[] rtArray = new double[responseTimeList.size()];
+		for (double responseTime : responseTimeList) {
+			rtArray[i++] = responseTime;
+		}
+
+		Arrays.sort(rtArray);
+
+		Percentile percentile = new Percentile();
+		Map<String, Object> additionalStats = newHashMap();
+		additionalStats.put("minRT", rtArray[0]);
+		additionalStats.put("pct25RT", percentile.evaluate(rtArray, 25));
+		additionalStats.put("pct50RT", percentile.evaluate(rtArray, 50));
+		additionalStats.put("pct75RT", percentile.evaluate(rtArray, 75));
+		additionalStats.put("pct90RT", percentile.evaluate(rtArray, 90));
+		additionalStats.put("pct95RT", percentile.evaluate(rtArray, 95));
+		additionalStats.put("pct99RT", percentile.evaluate(rtArray, 99));
+		additionalStats.put("maxRT", rtArray[rtArray.length - 1]);
+
+		LOGGER.debug("SingleConsole getAdditionalStats additionalStats {}", additionalStats);
+
+		this.statisticData.put("additionalStats", additionalStats);
 	}
 }
