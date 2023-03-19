@@ -10,9 +10,14 @@ buildscript {
     }
 }
 
+//plugins {
+//    id 'com.bmuschko.docker-spring-boot-application' version '6.6.1'
+//}
 apply plugin: "war"
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
+
+//description = "ngrinder-controller"
 
 sourceSets.main.output.resourcesDir = sourceSets.main.java.outputDir
 
@@ -105,6 +110,32 @@ processResources {
     }
 }
 
+//docker {
+//    springBootApplication {
+//        baseImage = 'jeanblanchard/java:serverjre-8' // 用于Spring Boot应用程序的Docker基本映像。
+//        maintainer = 'matieqiang' // 镜像维护者，registry中的用户
+//        ports = [80,16001,12000,12001,12002,12003,12004,12005,12006,12007,12008,12009] // 暴露的端口
+//        // 镜像名称和版本
+//        images = ["${project.group}/${rootProject.name}:${project.version}",
+//                  "${project.group}/${rootProject.name}:latest"]
+//        // 传递给java命令的JVM参数。
+//        jvmArgs = ["-Djava.security.egd=file:/dev/./urandom", '-Xmx2048m']
+//        // 用于启动应用程序的主类名称。如果您的源代码包含多个主类文件，则为此选项设置一个显式值很有用。
+//        // mainClassName = 默认通过扫描类路径发现的唯一主类名称
+//    }
+//    // 该插件默认使用本地Docker进行build，所以首先要保证本地docker已经启动
+//    // url = 'https://192.168.3.103:2375'
+//    // 如果url不指定的话
+//    // Unix系统默认：unix:///var/run/docker.sock
+//    // Windows系统默认：tcp://127.0.0.1:2375。
+//
+//    // 推送到远程仓库配置
+//    registryCredentials {
+//        url = 'https://index.docker.io/v1/'
+//        username = 'matieqiang' // registry user
+//        password = 'mtq@t0'
+//    }
+//}
 test {
     jvmArgs "-Xms600m", "-Xmx1024m"
 }

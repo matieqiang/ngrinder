@@ -62,3 +62,14 @@ Start agent.
 ```
 docker run -v ~/ngrinder-agent:/opt/ngrinder-agent -d ngrinder/agent:3.5.8 controller_ip:controller_web_port
 ``` 
+
+build controller image and push to docker hub
+-------
+```bash
+docker login
+cd docker
+./prepare.sh
+docker build -t ngrinder-controller:3.5.8-statistics ./controller
+docker push matieqiang/ngrinder-controller:3.5.8-statistics
+```
+
