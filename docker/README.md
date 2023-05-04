@@ -69,7 +69,7 @@ build controller image and push to docker hub
 docker login
 cd docker
 ./prepare.sh
-docker build -t ngrinder-controller:3.5.8-statistics ./controller
+docker build -t matieqiang/ngrinder-controller:3.5.8-statistics ./controller
 docker push matieqiang/ngrinder-controller:3.5.8-statistics
 ```
 
