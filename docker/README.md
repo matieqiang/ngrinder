@@ -73,3 +73,10 @@ docker build -t matieqiang/ngrinder-controller:3.5.8-statistics ./controller
 docker push matieqiang/ngrinder-controller:3.5.8-statistics
 ```
 
+## Dockerfile debug
+### 1. Alpine使用的不是正统的glibc，对于一些强依赖glibc的系统建议不要使用Alpine，比如使用了Oracle JDK的系统，建议在Alpine换成OpenJDK。
+install glibc
+1. 下载key: wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+2. 下载glibc.apk包，自己指定需要版本，可能有点慢，大家可以想办法下载然后上传也行
+
+
