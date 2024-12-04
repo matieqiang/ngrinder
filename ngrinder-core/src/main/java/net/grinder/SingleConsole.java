@@ -1335,6 +1335,11 @@ public class SingleConsole extends AbstractSingleConsole implements Listener, Sa
 	}
 
 	private void getAdditionalStats() {
+		if (responseTimeList == null || responseTimeList.isEmpty()) {
+			LOGGER.warn("responseTimeList is empty or null, skipping additional stats computation.");
+			return;
+		}
+
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("getAdditionalStats() responseTimeList is {}", responseTimeList.toString());
 		}
