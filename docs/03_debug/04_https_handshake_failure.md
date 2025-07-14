@@ -39,3 +39,6 @@ javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
 1. 问题原因是`ngrinder`使用的`JDK`版本不支持`TLSv1.2`，需要升级`JDK`版本。
 2. 修改`ngrinder`的`agent`配置文件`agent.conf`，添加`-Dhttps.protocols=TLSv1.2`参数。
 3. 重启`ngrinder`服务。
+
+3.5.9的image是基于java 11的，升级可以解决
+
